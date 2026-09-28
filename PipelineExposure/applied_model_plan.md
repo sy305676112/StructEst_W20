@@ -2,7 +2,8 @@
 
 *v2 按你的要求收窄了起点事实：只解释 (A) PE 降低投资，(B) memo v7 里的新结果。paper 里的其他结果不作为起点事实，模型不以它们为目标。*
 *依据：Francois, "How to Build a Political Economy Model"（IGC-BREAD Week 3 slides）；memo v7（Sep 24, 2026）；paper draft（Aug 2026）。*
-*配套：`model_checks.py` 用 sympy 验证本文所有比较静态、条件和 timing 计算（`python3 model_checks.py`，30/30 通过）。*
+*配套：`model_checks.py` 用 sympy 验证本文所有比较静态、条件和 timing 计算（`python3 model_checks.py`，38/38 通过）。*
+*LaTeX 版模型节：`latex/model_section.tex`，证明在 `latex/model_appendix.tex`，单独预览用 `latex/model_standalone.tex`。*
 *引用约定：slides p.x = BREAD slide 编号；memo x/18 = memo 页脚编号；Table/OA = paper 编号。offset = Resolving 系数 ÷（−Active 系数），即 resolve 的那部分 exposure 抵消了多少 Active 效应。*
 
 ---
@@ -41,7 +42,7 @@
 1. **Lemma 0（benchmark）。** 如果价格完全理性、manager 风险中性又不能推迟，那么规则的*不确定性*不影响投资，只有*预期内容*起作用，resolve 时投资平均也不会恢复。B1 拒绝了这个 benchmark。所以 memo 12/18 的 "with the mapping uncertain, holds back" 需要两样东西：数字在 level 上被读，**加上**一个 hold back 的理由——concave 的短期 payoff（R），或推迟的期权（W）。
 2. **Timing 命题（Prop 4）。** 它把 memo 10/18 的回归翻译成模型语言。如果不确定性恰好从 ED 发布持续到 ASU 发布，那么 Entering 和 Resolving 在 k=0 都应该约为 Active 效应的一半。memo 的点估计是 0.06 和 0.88。按点估计粗算，不确定性在 ED 发布前约 60 天就已存在，在 ASU 发布前约 46 天基本结束。这与 Board 先在公开会议上做决定、之后才发布文件的程序一致。在 W 下，0.88 超出一半的部分也可以是被推迟投资的 catch-up。
 3. **R 与 W 的裁决点在 k=0。** memo 18/18 的 catch-up 从 k=1 开始算。W 预测被推迟的投资在 Board 一做决定就执行，也就是落在 k=0，已经被 Resolving 的 k=0 系数吸收了。
-4. **第二个 comparative static 和一个形状预测。** reading intensity $\lambda=\omega b$；不确定性渠道下效应按 $\lambda^2$ 放大，所以 ownership gradient 应该是凸的，而 anticipation 下是线性的。
+4. **第二个 comparative static 和一个形状预测。** reading intensity $\lambda=\omega b$；不确定性渠道下效应按 $\lambda^2$ 放大，anticipation 下按 $\lambda$ 放大；若 $\lambda$ 与 transient 持股成正比，前者对持股是二次的，后者是线性的。
 5. **两个新变量/新预测。** $\sum_p e_{ip}^2\sigma_p^2$（slides 里 concentration index $H$ 的对应物）；contestedness 的 inverted-U（"contesting jatis" 的对应物）。
 
 **我的建议**：以 W（"wait until the reading is known"）为主版本，R 作为 robustness variant。第一优先是 timing 检验 T1：按 Board 的决定日重新定日期，看 k=0 是否仍有超出半季度基准的恢复。
@@ -185,7 +186,7 @@
 - (W) Project $j$ is postponed iff $\delta_j>\delta^*=\dfrac{A^2}{A^2+\lambda^2\sigma^2}$, where $A\equiv\gamma+\lambda\bar\theta$. With $\delta_j\sim U(0,1)$, pending-period investment is $I_W=A^3/(A^2+\lambda^2\sigma^2)$, decreasing in $\sigma^2$.
 - Both effects vanish when $\lambda=0$.
 
-**Proposition 2 (who: reading intensity).** For small $\sigma^2$ the pending-period cut scales with $\lambda^2$: about $A\rho\lambda^2\sigma^2$ under (R) and $\lambda^2\sigma^2/A$ under (W). The cut steepens in $\lambda$ whenever the distortion is modest (R: $\rho\lambda^2\sigma^2<1$; W: fewer than half of projects postponed). Transient owners raise $\omega$ (Bushee 1998) and $b$ (Bushee 2001); dedicated owners lower them. Hence PE × transient < 0 and PE × dedicated > 0, and, if $\omega$ and $b$ both rise with the transient share, the gradient is convex in that share. Under anticipation the cut is linear in $\lambda$.
+**Proposition 2 (who: reading intensity).** For small $\sigma^2$ the pending-period cut scales with $\lambda^2$: about $A\rho\lambda^2\sigma^2$ under (R) and $\lambda^2\sigma^2/A$ under (W). The cut steepens in $\lambda$ whenever the distortion is modest (R: $\rho\lambda^2\sigma^2<1$; W: fewer than half of projects postponed). Transient owners raise $\omega$ (Bushee 1998) and $b$ (Bushee 2001); dedicated owners lower them. Hence PE × transient < 0 and PE × dedicated > 0, and, if $\lambda$ is proportional to the transient share, the decline is quadratic in that share under both variants and linear under anticipation.
 
 **Proposition 3 (the Board decides).** Once $\theta$ is known, new investment returns to $\gamma+\lambda\theta$. On average this is a recovery under (R) and (W), and none under Lemma 0. Under (W), the postponed projects (mass $\lambda^2\sigma^2/(A^2+\lambda^2\sigma^2)$) are executed at once, so the decision quarter contains a catch-up; under (R) it does not.
 
@@ -279,7 +280,7 @@ slides 原话："Theory converts an observed demographic variable into a proxy f
 |---|---|---|---|---|---|---|---|---|
 | 1 | 按 Board 决定日重新定日期后，k=0 仍超出半季度基准 | 0 | + | 0 | + | − | 0 | T1 |
 | 2 | 恢复与决定的方向无关（按原案 finalize / 修改后 finalize / withdraw） | ✓ | ✓ | ✗（只有利好才恢复） | ✓ | ✗ | ✓ | T2 |
-| 3 | ownership gradient 是凸的（PE × M²） | ✓ | ✓ | ✗（线性） | 0 | 0 | 0 | T2 |
+| 3 | ownership gradient 是二次的（PE × M²；若 λ 与 M 成正比） | ✓ | ✓ | ✗（线性） | 0 | 0 | 0 | T2 |
 | 4 | PE × q 用 logs | 0 | + | 0 | + | ? | 0 | T3 |
 | 5 | CEO delta 放大，vega 减弱 | ✓ | 0 | 0 | 0 | 0 | 0 | T3 |
 | 6 | $\sum e^2\sigma^2$ 在 PE 之外的解释力 | − | − | 0 | − | 0 | − | T4 |
@@ -341,7 +342,7 @@ slides 原话："Theory converts an observed demographic variable into a proxy f
 
 (a) **按决定的方向分组。** 分为按原案 finalize、修改后 finalize（修改方向：对投资的报告更有利或更不利）、withdraw 三组。不确定性渠道预测三组都恢复；anticipation 预测只有利好的决定才恢复。
 
-(b) **Ownership gradient 的形状。** 回归中加入 PE × M 和 PE × M²（或更细的分组）。不确定性渠道预测凸（按 $\lambda^2$）；anticipation 预测线性（按 $\lambda$）。memo 的四分位点估计还判断不了形状：Q3→Q4 的斜率反而比 Q2→Q3 平。
+(b) **Ownership gradient 的形状。** 回归中加入 PE × M 和 PE × M²（或更细的分组）。若 $\lambda$ 与 M 成正比，不确定性渠道预测二次（按 $\lambda^2$），anticipation 预测线性（按 $\lambda$）。memo 的四分位点估计还判断不了形状：Q3→Q4 的斜率反而比 Q2→Q3 平。
 
 **T3 — R vs W**［现有 + ExecuComp；3–4 天］
 - 用 logs（$\ln(1+I/K)$，或 I/K 除以公司均值）重估 B4 的 PE × q 和 B5 的 PE × redeployability：R 预测都约为 0，W 预测都为正。

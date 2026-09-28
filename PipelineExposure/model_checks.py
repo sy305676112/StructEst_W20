@@ -195,6 +195,50 @@ check("B1", "value of removing rule risk (R) = (A^2/2) rho lam^2 s2/(1 + rho lam
       sp.simplify(gain_R - A**2 / 2 * rho * lam**2 * s2 / (1 + rho * lam**2 * s2)) == 0,
       "increasing in lam and s2: exposed firms with short-horizon owners gain most")
 
+# ---------------------------------------------------------------- LaTeX appendix formulas
+# Lemma 1(iii): rational price; manager weighs (1-omega)(a + V(I)) + omega*P.
+Ihat_eq = sp.solve(sp.Eq((1 - omega) * (g - Ihat) + omega * beta * thbar, 0), Ihat)[0]
+foc_full = ((1 - omega) * (g - I) + omega * beta * thbar
+            - rho * omega**2 * beta**2 * s2 * (I - Ihat)).subs(I, Ihat)
+check("X1", "Lemma 1(iii): equilibrium I = gamma + omega beta thbar/(1-omega), free of s2",
+      sp.simplify(Ihat_eq - (g + omega * beta * thbar / (1 - omega))) == 0
+      and sp.diff(foc_full.subs(Ihat, Ihat_eq), s2) == 0)
+
+# Proposition 5(ii): closed form of the payoff after optimal adjustment.
+mm = A + lam * z
+pi_closed = mm * I0s_ - I0s_**2 / 2 + (mm - I0s_) ** 2 / (2 * (1 + k))
+check("X2", "payoff after adjustment = m I0 - I0^2/2 + (m - I0)^2/(2(1+k))",
+      sp.simplify(payoff - pi_closed) == 0)
+c1 = lam * (A + k * I0s_) / (1 + k)
+check("X3", "Var(payoff) = c1^2 s2 + c2^2 Var(z^2), c1 = lam(A + k I0)/(1+k), c2 = lam^2/(2(1+k))",
+      sp.simplify(Var_pay - (c1**2 * s2 + (lam**2 / (2 * (1 + k))) ** 2 * (m4 - s2**2))) == 0)
+x_ = sp.symbols("x", positive=True)
+cut_x = A * x_ * (1 + k) / (1 + k * (1 + x_))
+check("X4", "risk-variant cut = A x - A x^2 k/(1+k) + O(x^3)",
+      sp.simplify(sp.series(cut_x, x_, 0, 3).removeO() - (A * x_ - A * x_**2 * k / (1 + k))) == 0)
+
+# Proposition 5(i) for general thbar (A = gamma + lam*thbar).
+check("X5", "general thbar: d2I_W/ds2 dgamma = lam^2 A^2 (A^2 - 3 lam^2 s2)/(A^2 + lam^2 s2)^3",
+      sp.simplify(sp.diff(IW, s2, g) - lam**2 * A**2 * (A**2 - 3 * lam**2 * s2)
+                  / (A**2 + lam**2 * s2) ** 3) == 0)
+check("X6", "general thbar: d2 ln I_W/ds2 dgamma = 2 A lam^2/(A^2 + lam^2 s2)^2",
+      sp.simplify(sp.diff(sp.log(IW), s2, g) - 2 * A * lam**2 / (A**2 + lam**2 * s2) ** 2) == 0)
+
+# Remark 1: postpone iff d > dstar/(dstar + h(1 - dstar)); threshold falls with h.
+ds = sp.symbols("dstar", positive=True)
+thr = ds / (ds + h * (1 - ds))
+check("X7", "Remark 1: d h/(1-d(1-h)) = dstar exactly at d = dstar/(dstar + h(1-dstar))",
+      sp.simplify(d_eff.subs(d, thr) - ds) == 0
+      and sp.simplify(sp.diff(thr, h) + ds * (1 - ds) / (ds + h * (1 - ds)) ** 2) == 0,
+      "the threshold decreases in h, so more projects are postponed when a decision is near")
+
+# Proposition 2 text: with lam proportional to M, cut is quadratic in M, benchmark linear.
+cM = sp.symbols("c_M", positive=True)
+check("X8", "lam = c M: small-s2 cut ~ M^2 (both variants); benchmark effect lam*thbar ~ M",
+      sp.degree(sp.expand(cut_R_small.subs(lam, cM * M).subs(thbar, 0)), M) == 2
+      and sp.degree(sp.expand(cut_W_small.subs(lam, cM * M).subs(thbar, 0)), M) == 2
+      and sp.degree(sp.expand((lam * thbar).subs(lam, cM * M)), M) == 1)
+
 # ---------------------------------------------------------------- Illustration
 num = {g: sp.Rational(1, 4), lam: sp.Rational(3, 20), s2: sp.Rational(9, 100)}
 drop_W = float(1 - dstar.subs(thbar, 0).subs(num))

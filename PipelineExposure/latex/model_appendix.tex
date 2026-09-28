@@ -1,0 +1,114 @@
+% =====================================================================
+% model_appendix.tex -- proofs for "A Model of Investment under a Pending Rule"
+% Use: \input{model_appendix} inside the appendix. The algebra is checked
+% symbolically in PipelineExposure/model_checks.py.
+% =====================================================================
+
+\section{Proofs for Section~\ref{sec:model}}\label{app:model}
+
+Throughout, write $z\equiv\theta-\bar\theta$, so that $E[z]=0$ and $E[z^{2}]=\sigma^{2}$, and let
+\[
+  \Pi(\theta)\equiv\max_{I}\,\bigl[V(I)+\lambda\theta I\bigr]=\tfrac12(\gamma+\lambda\theta)^{2},
+\]
+attained at $I=\gamma+\lambda\theta$. Since $E[(\gamma+\lambda\theta)^{2}]=A^{2}+\lambda^{2}\sigma^{2}$, $E[\Pi(\theta)]=\tfrac12(A^{2}+\lambda^{2}\sigma^{2})$.
+
+\paragraph{Proof of Lemma~\ref{lem:model:benchmark}.}
+(i) With $\rho=0$, the manager maximizes $E[U(I;\theta)]=\gamma I-\tfrac12 I^{2}+\lambda\bar\theta I$, because $\varepsilon$ has mean zero. The objective is strictly concave, and the first-order condition gives $I=\gamma+\lambda\bar\theta=A$, which depends on the distribution of $\theta$ only through $\bar\theta$.
+
+(ii) Once $\theta$ is known, investment is $\gamma+\lambda\theta$, so it changes by $\lambda(\theta-\bar\theta)=\lambda z$, whose expectation is zero.
+
+(iii) Let the firm report $R=a+\theta I+\eta$, where $a\sim N(\bar a,\sigma_a^{2})$ is a component of firm value unrelated to the project and $\eta\sim N(0,\sigma_\eta^{2})$; $a$, $\eta$ and $\theta$ are mutually independent. Investors observe $R$ and the decided $\theta$ but not $a$ or $I$, and they conjecture investment $\hat I$. They set
+\[
+  P=E\bigl[a+V(I)\mid R,\theta\bigr]=\bar a+\beta\,(R-\bar a-\theta\hat I)+V(\hat I),\qquad
+  \beta\equiv\frac{\sigma_a^{2}}{\sigma_a^{2}+\sigma_\eta^{2}},
+\]
+so that $P=\bar a+\beta(a-\bar a+\eta)+V(\hat I)+\beta\theta(I-\hat I)$. The manager chooses $I$ before $\theta$ is known and maximizes the mean minus $\rho/2$ times the variance of $(1-\omega)[a+V(I)]+\omega P$. The only term that depends on both $I$ and $\theta$ is $\omega\beta\theta(I-\hat I)$. Its variance is $\omega^{2}\beta^{2}\sigma^{2}(I-\hat I)^{2}$, and its covariance with the remaining random terms, which involve only $a$ and $\eta$, is zero. The first-order condition is
+\[
+  (1-\omega)(\gamma-I)+\omega\beta\bar\theta-\rho\,\omega^{2}\beta^{2}\sigma^{2}\,(I-\hat I)=0,
+\]
+and the objective is strictly concave in $I$. In equilibrium $I=\hat I$, so the last term vanishes and $\hat I=\gamma+\omega\beta\bar\theta/(1-\omega)$, which does not depend on $\sigma^{2}$. \qed
+
+\paragraph{Proof of Proposition~\ref{prop:model:pending}.}
+(i) Because $\varepsilon$ is independent of $\theta$, $\mathrm{Var}[U(I;\theta)]=\lambda^{2}\sigma^{2}I^{2}+\omega^{2}\mathrm{Var}(\varepsilon)$. The manager therefore maximizes $\gamma I-\tfrac12 I^{2}+\lambda\bar\theta I-\tfrac{\rho}{2}\lambda^{2}\sigma^{2}I^{2}$, which is strictly concave, and the first-order condition gives $I_R=A/(1+\rho\lambda^{2}\sigma^{2})$. Then
+\[
+  \frac{\partial I_R}{\partial\sigma^{2}}=-\frac{A\rho\lambda^{2}}{(1+\rho\lambda^{2}\sigma^{2})^{2}}<0\quad\text{for }\lambda\neq0.
+\]
+
+(ii) Undertaking project $j$ now yields $\max_I E[U(I;\theta)]=\tfrac12A^{2}$, by Lemma~\ref{lem:model:benchmark}(i). Postponing it yields $\delta_jE[\Pi(\theta)]=\tfrac12\delta_j(A^{2}+\lambda^{2}\sigma^{2})$. Hence the project is postponed if and only if $\delta_j>\delta^{*}$. Each project undertaken now invests $A$, and with $\delta_j$ uniform a mass $\delta^{*}$ of projects is undertaken, so $I_W=A\delta^{*}$ and
+\[
+  \frac{\partial I_W}{\partial\sigma^{2}}=-\frac{A^{3}\lambda^{2}}{(A^{2}+\lambda^{2}\sigma^{2})^{2}}<0\quad\text{for }\lambda\neq0.
+\]
+For a general distribution $G$ of $\delta_j$ with a positive density, $I_W=A\,G(\delta^{*})$, which decreases in $\sigma^{2}$ because $\delta^{*}$ does.
+
+(iii) Set $\lambda=0$ in (i) and (ii). \qed
+
+\paragraph{Proof of Proposition~\ref{prop:model:intensity}.}
+(i) $A-I_R=A\rho\lambda^{2}\sigma^{2}/(1+\rho\lambda^{2}\sigma^{2})=A\rho\lambda^{2}\sigma^{2}+O(\sigma^{4})$ and $A-I_W=A\lambda^{2}\sigma^{2}/(A^{2}+\lambda^{2}\sigma^{2})=\lambda^{2}\sigma^{2}/A+O(\sigma^{4})$.
+
+(ii) With $\bar\theta=0$, $A=\gamma$ and
+\[
+  \frac{\partial^{2}I_R}{\partial\sigma^{2}\partial\lambda}=-\frac{2\gamma\rho\lambda\,(1-\rho\lambda^{2}\sigma^{2})}{(1+\rho\lambda^{2}\sigma^{2})^{3}},\qquad
+  \frac{\partial^{2}I_W}{\partial\sigma^{2}\partial\lambda}=-\frac{2\gamma^{3}\lambda\,(\gamma^{2}-\lambda^{2}\sigma^{2})}{(\gamma^{2}+\lambda^{2}\sigma^{2})^{3}}.
+\]
+For $\lambda>0$, the first is negative if and only if $\rho\lambda^{2}\sigma^{2}<1$, which is equivalent to $I_R>A/2$, and the second is negative if and only if $\lambda^{2}\sigma^{2}<\gamma^{2}$, which is equivalent to $\delta^{*}>1/2$. \qed
+
+\paragraph{Proof of Proposition~\ref{prop:model:decision}.}
+Once $\theta$ is known there is no uncertainty about the reading, so in both variants new investment maximizes $V(I)+\lambda\theta I$ and equals $\gamma+\lambda\theta$, whose mean is $A$. (i) The average recovery is therefore $A-I_R$, and no project was postponed. (ii) New investment recovers on average from $A\delta^{*}$ to $A$. Each postponed project is undertaken at the decision, because waiting longer only loses value. This adds a mass $1-\delta^{*}$ of projects, each of mean scale $A$, so investment in the period of the decision is on average $A(2-\delta^{*})>A$. (iii) follows from Lemma~\ref{lem:model:benchmark}(ii). \qed
+
+\paragraph{Proof of Proposition~\ref{prop:model:timing}.}
+Let $u\sim U[0,1]$ be the point in its quarter at which a document is published, and let $f$ be the share of a quarter in which the rule is effectively pending, so that investment in the quarter is lowered by $|\beta|f$. A proposal pending throughout the quarter has $f=1$, and each coefficient measures the difference from such a proposal, $|\beta|(1-E[f])$.
+
+In the resolution quarter, the rule is effectively decided at $u-c$ if $u>c$ and in the previous quarter otherwise, so $f=\max\{0,u-c\}$ and
+\[
+  E[f]=\int_{c}^{1}(u-c)\,du=\tfrac12(1-c)^{2}.
+\]
+The Resolving coefficient is therefore $|\beta|[1-(1-c)^{2}/2]$. In the following quarter the resolved proposal has $f=0$, so the coefficient is $|\beta|$. In the issue quarter, the rule is effectively pending from $u-a$ if $u>a$ and throughout the quarter otherwise, so $f=1-\max\{0,u-a\}$, $E[f]=1-(1-a)^{2}/2$, and the Entering coefficient is $|\beta|(1-a)^{2}/2$. Setting $a=c=0$ gives (iii). In the waiting variant, the postponed projects are undertaken when the Board decides (Proposition~\ref{prop:model:decision}), which falls in the resolution quarter if $u>c$ and in the quarter before otherwise; this gives (iv).
+
+With the estimates in Table~\ref{tab:timing}, $(1-a)^{2}/2=0.101/1.725$ and $1-(1-c)^{2}/2=1.518/1.725$ give $a=0.66$ and $c=0.51$, or 60 and 46 days at 91 days per quarter. % memo v7
+\qed
+
+\paragraph{Proof of Proposition~\ref{prop:model:holdback}.}
+(i) Since $\partial A/\partial\gamma=1$, differentiating $\partial I_R/\partial\sigma^{2}=-A\rho\lambda^{2}/(1+\rho\lambda^{2}\sigma^{2})^{2}$ with respect to $\gamma$ gives $-\rho\lambda^{2}/(1+\rho\lambda^{2}\sigma^{2})^{2}<0$, and $\partial\ln I_R/\partial\sigma^{2}=-\rho\lambda^{2}/(1+\rho\lambda^{2}\sigma^{2})$ does not depend on $\gamma$. In the waiting variant, $\partial\ln I_W/\partial\sigma^{2}=-\lambda^{2}/(A^{2}+\lambda^{2}\sigma^{2})$, whose derivative with respect to $\gamma$ is $2A\lambda^{2}/(A^{2}+\lambda^{2}\sigma^{2})^{2}>0$, and
+\[
+  \frac{\partial^{2}I_W}{\partial\sigma^{2}\partial\gamma}=\frac{\lambda^{2}A^{2}\,(A^{2}-3\lambda^{2}\sigma^{2})}{(A^{2}+\lambda^{2}\sigma^{2})^{3}},
+\]
+which is positive if and only if $A^{2}>3\lambda^{2}\sigma^{2}$, that is, if and only if $1-\delta^{*}<1/4$.
+
+(ii) Let the manager invest $I_0$ while the proposal is pending and, once $\theta$ is known, choose $I_1$ at adjustment cost $\tfrac{k}{2}(I_1-I_0)^{2}$, with $k>0$. Write $m\equiv\gamma+\lambda\theta=A+\lambda z$. The optimal adjustment is $I_1=(m+kI_0)/(1+k)$, and the resulting payoff is
+\[
+  \pi(z;I_0)=mI_0-\tfrac12I_0^{2}+\frac{(m-I_0)^{2}}{2(1+k)}.
+\]
+Hence
+\[
+  E[\pi]=AI_0-\tfrac12I_0^{2}+\frac{(A-I_0)^{2}+\lambda^{2}\sigma^{2}}{2(1+k)},
+\]
+which is maximized at $I_0=A$ with value $\tfrac12[A^{2}+\lambda^{2}\sigma^{2}/(1+k)]$. This proves the claim for the benchmark. In the waiting variant, postponing project $j$ still yields $\tfrac12\delta_j(A^{2}+\lambda^{2}\sigma^{2})$, so the project is postponed if and only if
+\[
+  \delta_j>\frac{A^{2}+\lambda^{2}\sigma^{2}/(1+k)}{A^{2}+\lambda^{2}\sigma^{2}},
+\]
+and the share postponed is $\lambda^{2}\sigma^{2}k/[(1+k)(A^{2}+\lambda^{2}\sigma^{2})]$. Its derivative with respect to $k$ is $\lambda^{2}\sigma^{2}/[(1+k)^{2}(A^{2}+\lambda^{2}\sigma^{2})]>0$.
+
+In the risk variant, $\pi$ is quadratic in $z$, with linear coefficient $c_1=\lambda(A+kI_0)/(1+k)$ and quadratic coefficient $c_2=\lambda^{2}/[2(1+k)]$. Because $z$ is symmetric, $E[z^{3}]=0$ and $\mathrm{Var}[\pi]=c_1^{2}\sigma^{2}+c_2^{2}\,\mathrm{Var}(z^{2})$, in which only $c_1$ depends on $I_0$. The objective $E[\pi]-\tfrac{\rho}{2}\mathrm{Var}[\pi]$ is strictly concave in $I_0$, and its first-order condition,
+\[
+  \frac{k}{1+k}(A-I_0)-\rho\sigma^{2}c_1\,\frac{\lambda k}{1+k}=0,
+\]
+gives $I_0=A(1+k-x)/[1+k(1+x)]$ with $x\equiv\rho\lambda^{2}\sigma^{2}$. Hence
+\[
+  A-I_0=\frac{Ax(1+k)}{1+k(1+x)}=Ax-\frac{Ax^{2}k}{1+k}+O(x^{3}),\qquad
+  \frac{\partial(A-I_0)}{\partial k}=-\frac{Ax^{2}}{[1+k(1+x)]^{2}}<0.
+\]
+
+(iii) follows from Proposition~\ref{prop:model:decision}. \qed
+
+\paragraph{Proof of Proposition~\ref{prop:model:portfolio}.}
+The shift in the firm's reading is $\sum_{p}e_{i,p,q}\Delta_p$, whose variance is $\sum_{p}e_{i,p,q}^{2}\sigma_p^{2}$ because the $\Delta_p$ are independent. With $\sigma_p^{2}=\sigma^{2}$ for all $p$ and Pipeline Exposure $X_{i,q}\equiv\sum_pe_{i,p,q}$ held fixed, $\sigma_{i,q}^{2}=\sigma^{2}X_{i,q}^{2}H_{i,q}$, where $H_{i,q}\equiv\sum_p(e_{i,p,q}/X_{i,q})^{2}$ is the Herfindahl index of the firm's exposure across proposals. \qed
+
+\paragraph{Proof of Proposition~\ref{prop:model:contested}.}
+The shift is $\Delta_p$ with probability $\pi_p$ and zero otherwise. Its variance, $\pi_p(1-\pi_p)\Delta_p^{2}$, is largest at $\pi_p=1/2$, and the decline in Proposition~\ref{prop:model:pending} increases in the variance. Its mean is $\pi_p\Delta_p$, so under the benchmark investment moves by $\lambda(\bar\theta-\theta_0)=\lambda\pi_p\Delta_p$, which is monotone in $\pi_p$. \qed
+
+\paragraph{Proof of Remark~\ref{rem:model:hazard}.}
+While the proposal is pending the problem is stationary, so a manager who prefers to wait in one quarter prefers to wait in every later quarter until the Board decides. The value $W_j$ of holding project $j$ then satisfies $W_j=\phi_j\{hE[\Pi(\theta)]+(1-h)W_j\}$, so $W_j=\delta_jE[\Pi(\theta)]$ with $\delta_j=\phi_jh/[1-\phi_j(1-h)]$, and
+\[
+  \frac{\partial\delta_j}{\partial h}=\frac{\phi_j(1-\phi_j)}{[1-\phi_j(1-h)]^{2}}>0.
+\]
+The project is postponed if and only if $\delta_j>\delta^{*}$, that is, if and only if $\phi_j>\delta^{*}/[\delta^{*}+h(1-\delta^{*})]$. This threshold decreases in $h$, so for any distribution of $\phi_j$ with a positive density the share of projects postponed increases in $h$. In the risk variant, $I_R$ does not depend on $h$. \qed

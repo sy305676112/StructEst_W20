@@ -1,0 +1,52 @@
+% Standalone preview of the model section and its appendix.
+% Build: latexmk -pdf model_standalone.tex
+% Section, table, figure and equation counters are set so that numbers look
+% as they would in the paper; labels for results elsewhere in the paper are
+% placeholders written to the .aux file below.
+\documentclass[12pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\input{model_preamble}
+\setcitestyle{authoryear,round,semicolon,aysep={,},yysep={,}}
+
+\makeatletter
+\newcommand{\placeholderlabel}[2]{\immediate\write\@auxout{\string\newlabel{#1}{{#2}{}}}}
+\AtBeginDocument{%
+  \placeholderlabel{sec:investment}{5.1}%
+  \placeholderlabel{eq:components}{4}%
+  \placeholderlabel{tab:investment}{8}%
+  \placeholderlabel{tab:timing}{9}%
+  \placeholderlabel{tab:ownership}{10}%
+  \placeholderlabel{fig:transient}{6}%
+  \placeholderlabel{tab:costcapital}{11}%
+  \placeholderlabel{tab:learning}{12}%
+  \placeholderlabel{tab:realoptions}{13}%
+}
+\makeatother
+
+\begin{document}
+
+\begin{center}
+  {\large Measuring Firm-Level Exposure to the Accounting Standard-Setting Pipeline}\\[4pt]
+  Model section: standalone draft
+\end{center}
+
+\noindent{\footnotesize\emph{Draft note.} Section~5.1, Equation~(4), Tables~8--13 and Figure~6 refer to results elsewhere in the paper; their numbers here are placeholders.}
+
+\setcounter{section}{5}
+\setcounter{equation}{6}
+\setcounter{table}{13}
+\setcounter{figure}{6}
+\input{model_section}
+
+\appendix
+\setcounter{section}{1}
+\input{model_appendix}
+
+\bibliographystyle{plainnat}
+\bibliography{model_refs}
+
+\end{document}
